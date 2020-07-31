@@ -7,6 +7,14 @@ function errorResponse(res, error, status = 500) {
   res.status(status).json(error);
 }
 
+function getIPAddress(req) {
+  if (appConfig.express.ipAddressHeader) {
+    return req.headers[appConfig.express.ipAddressHeader];
+  }
+  return req.connection.remoteAddress;
+}
+
 module.exports = {
   errorResponse,
+  getIPAddress,
 };

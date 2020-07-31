@@ -14,4 +14,7 @@ module.exports = {
     salt: process.env.HASH_SALT || 10,
   },
   env: process.env.NODE_ENV || "development",
+  express: {
+    ipAddressHeader: null,
+  },
 };

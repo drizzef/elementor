@@ -14,4 +14,13 @@ module.exports = {
   migrations: {
     tableName: "migrations",
   },
+  pool: {
+    min: 2, // TODO: export in the env variable
+    max: 10, // TODO: export in the env variable
+    afterCreate: function (conn, cb) {
+      conn.query('SET sql_mode="NO_ENGINE_SUBSTITUTION";', function (err) {
+        cb(err, conn);
+      });
+    },
+  },
 };

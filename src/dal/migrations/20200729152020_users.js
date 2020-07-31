@@ -8,6 +8,7 @@ exports.up = function (knex) {
       table.timestamp("register_at").defaultTo(knex.fn.now());
       table.timestamps(true, true);
       table.unique("username");
+      table.index("is_active");
     })
     .createTable("users_logins", function (table) {
       table.integer("user_id").unsigned().references("users.id");

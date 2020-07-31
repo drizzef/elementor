@@ -9,6 +9,8 @@ router.post("/register", validate(registerValidation), AuthController.register);
 
 router.post("/login", passport.authenticate("local"), AuthController.login);
 
+router.post("/logout", passport.authenticate("jwt"), AuthController.logout);
+
 router.post("/auth", passport.authenticate("jwt"), AuthController.auth);
 
 module.exports = router;

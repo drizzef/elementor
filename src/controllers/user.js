@@ -1,5 +1,14 @@
+const { UserService } = require("../dal/services");
+const { errorResponse } = require("../utils");
 class UserController {
-  getAll(req, res, next) {}
+  async getAll(req, res) {
+    try {
+      const result = await UserService.findAllActive();
+      res.json(result);
+    } catch (error) {
+      errorResponse(res, error);
+    }
+  }
   getOne(req, res, next) {}
 }
 
