@@ -1,4 +1,5 @@
 # ELEMENTOR Test Project
+![Node.js CI](https://github.com/drizzef/elementor/workflows/Node.js%20CI/badge.svg?branch=master)
 
 ## Installation
 
