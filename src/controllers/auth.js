@@ -10,11 +10,12 @@ const user = require("../dal/services/user");
 class AuthController {
   async register(req, res) {
     try {
-      const { username, password } = req.body;
+      const { username } = req.body;
+      let { password } = req.body;
       // hash password
       password = await Hasher.hash(password, appConfig.hash.salt);
       const result = await userService.create(username, password);
-      res.json(result);
+      res.status(201).json(result);
     } catch (error) {
       errorResponse(res, error);
     }
