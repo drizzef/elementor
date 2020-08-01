@@ -8,6 +8,7 @@ const supertest = require("supertest");
 const registerTests = require("./auth/register");
 const loginTests = require("./auth/login");
 const usersTests = require("./users/users");
+const db = require("../src/dal");
 const { UserService } = require("../src/dal/services");
 const req = supertest(app);
 const faker = require("faker");
@@ -24,6 +25,11 @@ const common = {
     token: "",
   },
 };
+
+beforeAll(async () => {
+  // run the migrations and do any other setup here
+  await db.migrate.latest();
+});
 
 afterAll(() => {
   // Remove the users from the database
