@@ -11,11 +11,17 @@ exports.up = function (knex) {
       table.index("is_active");
     })
     .createTable("users_logins", function (table) {
-      table.integer("user_id").unsigned().references("users.id");
+      table
+        .integer("user_id")
+        .unsigned()
+        .references("users.id")
+        .onDelete("CASCADE");
       table.string("ip_v4_address", 15);
       table.string("user_agent", 255).notNullable();
       table.timestamp("login_at").defaultTo(knex.fn.now());
+      table.timestamp("last_login_at");
       table.index("user_id");
+      table.index("login_at");
     });
 };
 

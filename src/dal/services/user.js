@@ -17,10 +17,30 @@ class UserService {
         is_active: true,
       })
       .select([
-        `${userLogins.tableName}.*`,
         `${this.tableName}.username`,
-        `${this.tableName}.register_at`,
+        `${this.tableName}.id`,
+        `${userLogins.tableName}.login_at`,
+        `${userLogins.tableName}.last_login_at`,
         `${this.tableName}.updated_at`,
+        `${userLogins.tableName}.ip_v4_address`,
+      ])
+      .groupBy(`${userLogins.tableName}.user_id`);
+  }
+
+  async findUserDetails(username) {
+    return knex(this.tableName)
+      .join(
+        userLogins.tableName,
+        `${this.tableName}.id`,
+        "=",
+        `${userLogins.tableName}.user_id`
+      )
+      .where({
+        username,
+      })
+      .select([
+        `${userLogins.tableName}.user_agent`,
+        `${this.tableName}.register_at`,
       ])
       .count(`${userLogins.tableName}.user_id`, { as: "loginsCount" })
       .groupBy(`${userLogins.tableName}.user_id`);
@@ -58,6 +78,10 @@ class UserService {
     return knex(this.tableName)
       .where("username", "=", username)
       .update("is_active", false);
+  }
+
+  async delete(username) {
+    return knex(this.tableName).where("username", "=", username).delete();
   }
 }
 

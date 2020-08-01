@@ -1,12 +1,24 @@
-const { username, password } = require("../common");
+module.exports = (request, common) => {
+  const { username, password } = common.user1;
 
-module.exports = (request) => {
   test("It should register successfuly", () => {
     return request
       .post("/register")
       .send({
         username,
         password,
+      })
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(201);
+  });
+
+  test("It should register another user successfuly", () => {
+    return request
+      .post("/register")
+      .send({
+        username: common.user2.username,
+        password: common.user2.password,
       })
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)

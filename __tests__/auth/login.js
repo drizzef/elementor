@@ -1,13 +1,10 @@
-const { username, password } = require("../common");
-
-let token = "";
-module.exports = (request) => {
+module.exports = (request, common) => {
   test("It should login successfuly", () => {
     return request
       .post("/login")
       .send({
-        username,
-        password,
+        username: common.user1.username,
+        password: common.user1.password,
       })
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
@@ -16,7 +13,25 @@ module.exports = (request) => {
         expect(res.body).toEqual({
           token: expect.any(String),
         });
-        token = res.body.token;
+        common.user1.token = res.body.token;
+      });
+  });
+
+  test("It should login another user successfuly", () => {
+    return request
+      .post("/login")
+      .send({
+        username: common.user2.username,
+        password: common.user2.password,
+      })
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .then((res) => {
+        expect(res.body).toEqual({
+          token: expect.any(String),
+        });
+        common.user2.token = res.body.token;
       });
   });
 
@@ -24,8 +39,8 @@ module.exports = (request) => {
     return request
       .post("/login")
       .send({
-        username: username + "1",
-        password,
+        username: "a",
+        password: "b",
       })
       .set("Accept", "application/json")
       .expect(401);
@@ -50,13 +65,13 @@ module.exports = (request) => {
   test("It should authenticated", () => {
     return request
       .post("/auth")
-      .set("Authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${common.user1.token}`)
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
       .expect(200)
       .then((res) => {
         expect(res.body).toEqual({
-          username,
+          username: common.user1.username,
         });
       });
   });
@@ -64,7 +79,7 @@ module.exports = (request) => {
   test("It should not authenticated", () => {
     return request
       .post("/auth")
-      .set("Authorization", `Bearer ${token}1`)
+      .set("Authorization", `Bearer ${common.user1.token}1`)
       .set("Accept", "application/json")
       .expect(401);
   });
