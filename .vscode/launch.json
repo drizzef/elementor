@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch server.js via nodemon",
+      "name": "Launch api via nodemon",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "nodemon",

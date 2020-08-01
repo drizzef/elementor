@@ -10,3 +10,5 @@
 - Login should be transactional
 - Error middleware
 - Testing: testing without db.
+- Add Redis/Memcached
+- Add Helmet

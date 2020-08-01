@@ -12,3 +12,19 @@ services:
     restart: always
     ports:
       - 8080:8080
+  api:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=127.0.0.1
+      - DB_PORT=3306
+      - DB_NAME=elementor_dashboard
+      - DB_PASSWD=elementor_dev
+      - DB_USERNAME=elementor_dev
+      - JWT_TOKEN=F7248E09B0CCC6D99E7B420AE9E480FFABD492D4692FA59352DEE7362CB81509
+    ports:
+      - 3000:3000
+    depends_on:
+      - mysql
