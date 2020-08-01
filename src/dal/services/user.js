@@ -1,8 +1,9 @@
-const knex = require("../index");
-const userLogins = require("./user-logins");
+const knex = require('../index');
+const userLogins = require('./user-logins');
+
 class UserService {
   constructor() {
-    this.tableName = "users";
+    this.tableName = 'users';
   }
 
   async findAllActive() {
@@ -10,8 +11,8 @@ class UserService {
       .join(
         userLogins.tableName,
         `${this.tableName}.id`,
-        "=",
-        `${userLogins.tableName}.user_id`
+        '=',
+        `${userLogins.tableName}.user_id`,
       )
       .where({
         is_active: true,
@@ -32,8 +33,8 @@ class UserService {
       .join(
         userLogins.tableName,
         `${this.tableName}.id`,
-        "=",
-        `${userLogins.tableName}.user_id`
+        '=',
+        `${userLogins.tableName}.user_id`,
       )
       .where({
         username,
@@ -42,11 +43,11 @@ class UserService {
         `${userLogins.tableName}.user_agent`,
         `${this.tableName}.register_at`,
       ])
-      .count(`${userLogins.tableName}.user_id`, { as: "loginsCount" })
+      .count(`${userLogins.tableName}.user_id`, { as: 'loginsCount' })
       .groupBy(`${userLogins.tableName}.user_id`);
   }
 
-  async findOne(username, select = "*") {
+  async findOne(username, select = '*') {
     return knex(this.tableName)
       .where({
         username,
@@ -64,24 +65,24 @@ class UserService {
   }
 
   async isExist(username) {
-    const result = await this.findOne(username, "id");
-    return result.length ? true : false;
+    const result = await this.findOne(username, 'id');
+    return !!result.length;
   }
 
   async login(username) {
     return knex(this.tableName)
-      .where("username", "=", username)
-      .update("is_active", true);
+      .where('username', '=', username)
+      .update('is_active', true);
   }
 
   async logout(username) {
     return knex(this.tableName)
-      .where("username", "=", username)
-      .update("is_active", false);
+      .where('username', '=', username)
+      .update('is_active', false);
   }
 
   async delete(username) {
-    return knex(this.tableName).where("username", "=", username).delete();
+    return knex(this.tableName).where('username', '=', username).delete();
   }
 }
 

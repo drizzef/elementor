@@ -14,13 +14,7 @@ COPY jest.setup.js .
 # Install app dependencies
 RUN yarn install
 
-# Run migrations
-RUN yarn installation
-
 # Run Tests
 RUN yarn test
-
-# Show current folder structure in logs
-RUN ls -al -R
 
 CMD [ "pm2-runtime", "start", "pm2.json" ]

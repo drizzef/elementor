@@ -1,14 +1,12 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
-class JWT {
-  // TODO: add expration
+module.exports = {
+  // TODO: add expiration
   sign(payload, secret) {
     return jwt.sign(payload, secret);
-  }
+  },
 
   verify(token, secret) {
     return jwt.verify(token, secret);
-  }
-}
-
-module.exports = new JWT();
+  },
+};

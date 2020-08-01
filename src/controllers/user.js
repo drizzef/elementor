@@ -1,6 +1,7 @@
-const { UserService } = require("../dal/services");
-const { errorResponse } = require("../utils");
-class UserController {
+const { UserService } = require('../dal/services');
+const { errorResponse } = require('../utils');
+
+module.exports = {
   async getAll(req, res) {
     try {
       const result = await UserService.findAllActive();
@@ -8,7 +9,7 @@ class UserController {
     } catch (error) {
       errorResponse(res, error);
     }
-  }
+  },
 
   async getOne(req, res) {
     try {
@@ -18,7 +19,5 @@ class UserController {
     } catch (error) {
       errorResponse(res, error);
     }
-  }
-}
-
-module.exports = new UserController();
+  },
+};
