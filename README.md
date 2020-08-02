@@ -7,6 +7,8 @@
 It is so easy you just need to run in the root folder of the project:
 `docker-compose up`
 
+- **NOTE**: Run migrate on the first time. After running the first time run the following command: `docker-compose exec api yarn installation`
+
 It will install and run MySQL 5.7 & Adminer & API
 You can test the App from the following url: http://localhost:3000
 
